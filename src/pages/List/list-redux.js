@@ -1,9 +1,9 @@
 // this one group, eazy develop and maintain
-const HOME_SEND_FIRST_DATA = 'HOME_SEND_FIRST_DATA';
+const LIST_SEND_FIRST_DATA = 'LIST_SEND_FIRST_DATA';
 
-export const setHomeAction = exampleData => {
+export const setListAction = exampleData => {
   return {
-    type: HOME_SEND_FIRST_DATA,
+    type: LIST_SEND_FIRST_DATA,
     exampleData,
   };
 };
@@ -11,10 +11,10 @@ export const setHomeAction = exampleData => {
 // any actions will be received by reducers
 export const reducer = (state, action) => {
   switch (action.type) {
-    case HOME_SEND_FIRST_DATA:
+    case LIST_SEND_FIRST_DATA:
       return {
         ...state,
-        homeReduxData: action.exampleData,
+        listReduxData: action.exampleData,
       };
     default:
       return state;
