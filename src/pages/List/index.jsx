@@ -11,6 +11,10 @@ class PureList extends React.Component {
     };
   }
 
+  goBack = () => {
+    this.props.history.goBack();
+  };
+
   changeHomeRedux = () => {
     this.props.setListAction(
       `home redux time ${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -21,6 +25,7 @@ class PureList extends React.Component {
     return (
       <div>
         <p>this is list</p>
+        <button onClick={this.goBack}>back</button>
         <p>{this.props.listReduxData}</p>
         <button onClick={this.changeHomeRedux}>changeListRedux</button>
       </div>

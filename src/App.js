@@ -1,13 +1,11 @@
 import React from 'react';
-import Home from './pages/Home/index';
-import List from './pages/List/index';
+import AppRouter from './services/router';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Home />
-      <List />
+      <AppRouter />
     </div>
   );
 }

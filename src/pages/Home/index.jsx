@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { setHomeAction } from './redux/action';
 import Eat from './components/Eat/index';
@@ -12,6 +13,10 @@ class PureHome extends React.Component {
     };
   }
 
+  goList = () => {
+    this.props.history.push('/list');
+  };
+
   changeHomeRedux = () => {
     this.props.setHomeAction(
       `home redux time ${new Date().getMinutes()}:${new Date().getSeconds()}`
@@ -22,6 +27,11 @@ class PureHome extends React.Component {
     return (
       <div id="cityGuideHome">
         <p>this is home</p>
+
+        <Link to="/list">goToListByLink</Link>
+
+        <button onClick={this.goList}>goToListByFn</button>
+
         <p>{this.props.homeReduxData}</p>
         <button onClick={this.changeHomeRedux}>changeHomeRedux</button>
         <Eat />
