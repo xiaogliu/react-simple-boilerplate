@@ -42,7 +42,6 @@ class PureHome extends React.Component {
 
 // redux
 const mapStateToProps = state => {
-  console.log(state, 29999);
   return {
     homeReduxData: state.home.homeReduxData,
   };

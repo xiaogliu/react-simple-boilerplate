@@ -1,5 +1,5 @@
 // this one group, eazy develop and maintain
-const HOME_SEND_FIRST_DATA = 'HOME_SEND_FIRST_DATA';
+const HOME_SEND_FIRST_DATA = 'home_send_first_data';
 
 export const setHomeAction = exampleData => {
   return {

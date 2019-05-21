@@ -1,5 +1,5 @@
 // this one group, eazy develop and maintain
-const LIST_SEND_FIRST_DATA = 'LIST_SEND_FIRST_DATA';
+const LIST_SEND_FIRST_DATA = 'list_send_first_data';
 
 export const setListAction = exampleData => {
   return {

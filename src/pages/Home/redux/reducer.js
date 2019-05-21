@@ -10,7 +10,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     // handle cross-topic actions type
     default:
-      newState = initialState;
+      newState = state;
       break;
   }
 

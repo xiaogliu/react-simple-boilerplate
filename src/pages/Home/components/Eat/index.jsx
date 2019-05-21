@@ -30,7 +30,6 @@ class PureEat extends React.Component {
 
 // redux
 const mapStateToProps = state => {
-  console.log(state, 29999);
   return {
     eatReduxData: state.home.eatReduxData,
   };
