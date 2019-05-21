@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { setHomeAction } from './redux/action';
 import Eat from './components/Eat/index';
@@ -52,9 +52,11 @@ const mapDispatchToProps = dispatch => {
     setHomeAction: homeData => dispatch(setHomeAction(homeData)),
   };
 };
-const Home = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PureHome);
+const Home = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PureHome)
+);
 
 export default Home;

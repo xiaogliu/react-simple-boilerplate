@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router-dom';
 import { setListAction } from './redux/action';
 
 class PureList extends React.Component {
@@ -23,7 +23,7 @@ class PureList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="cityGuideList">
         <p>this is list</p>
         <button onClick={this.goBack}>back</button>
         <p>{this.props.listReduxData}</p>
@@ -44,9 +44,11 @@ const mapDispatchToProps = dispatch => {
     setListAction: listData => dispatch(setListAction(listData)),
   };
 };
-const List = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PureList);
+const List = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PureList)
+);
 
 export default List;
