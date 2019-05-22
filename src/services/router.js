@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
@@ -14,7 +14,8 @@ const AppRouter = () => (
   <Router>
     <Suspense fallback={Loading}>
       <div className="App">
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
+        <Route exact path="/" render={() => <Redirect to="/home/eat" />} />
+        <Route exact path="/home" render={() => <Redirect to="/home/eat" />} />
         <Switch>
           <Route path="/home" render={() => <Home />} />
           <Route path="/list" render={() => <List />} />

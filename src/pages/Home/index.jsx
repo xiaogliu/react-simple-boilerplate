@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 import { setHomeAction } from './redux/action';
-import Eat from './components/Eat/index';
+import Nav from './components/Nav/index';
 
 class PureHome extends React.Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class PureHome extends React.Component {
   render() {
     return (
       <div id="cityGuideHome">
+        <Nav />
         <p>this is home</p>
 
         <Link to="/list">goToListByLink</Link>
@@ -33,8 +34,8 @@ class PureHome extends React.Component {
         <button onClick={this.goList}>goToListByFn</button>
 
         <p>{this.props.homeReduxData}</p>
+
         <button onClick={this.changeHomeRedux}>changeHomeRedux</button>
-        <Eat />
       </div>
     );
   }

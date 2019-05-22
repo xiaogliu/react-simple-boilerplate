@@ -41,8 +41,8 @@
       /reset.css
       /global.css
     /redux # 整体 redux
-      /root-reducer.js # 引入所有 reducer  
-      /config-store.js # 生成 store，中间件引入等  
+      /root-reducer.js # 引入所有 reducer
+      /config-store.js # 生成 store，中间件引入等
     /mock # mock 数据
     /utils # 工具，常量，不同通过 mock 模拟的本地假数据等
       /utils.js # 工具函数
@@ -50,9 +50,8 @@
       /locale-data.js # locale data 不应该很多，比如 cookie，安卓端返回的常量等，api 数据应该通过 mock 获取
     /third-party # 第三方服务
       /mixpanel.js
-      /hotjar.js 
+      /hotjar.js
 ```
-
 
 Q&A：
 
@@ -62,18 +61,16 @@ app.js root components, index.js traditional and actual entry file.
 
 2. 如何处理全大写字母
 
-- 如果单词缩写是两个字母的，则全大写，例如是 IOException 而不是 IoException。   
+- 如果单词缩写是两个字母的，则全大写，例如是 IOException 而不是 IoException。
 - 如果单词缩写超过两个字母，则第一个字母大写，其余字母小写。
 
-参考 
+参考
 
-[如何更好地组织 React 项目](https://github.com/JChehe/blog/issues/19)    
-[How to better organize your React applications?](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1)   
+[如何更好地组织 React 项目](https://github.com/JChehe/blog/issues/19)  
+[How to better organize your React applications?](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1)  
 [airbnb naming](https://github.com/airbnb/javascript/tree/master/react#naming)
-[驼峰命名法该如何解决某些单词需要大写的问题?](https://www.zhihu.com/question/31524855)   
+[驼峰命名法该如何解决某些单词需要大写的问题?](https://www.zhihu.com/question/31524855)  
 [Why does create-react-app creates both App.js and index.js?](https://stackoverflow.com/questions/50493069/why-does-create-react-app-creates-both-app-js-and-index-js)
-
-
 
 ## 二 开发
 
@@ -83,11 +80,10 @@ app.js root components, index.js traditional and actual entry file.
 
 [Adding a Sass Stylesheet](https://facebook.github.io/create-react-app/docs/adding-a-sass-stylesheet)
 
-
 - `src/app.scss`
 
 ```scss
-@import './pages/Home/index.scss'
+@import './pages/Home/index.scss';
 ```
 
 - `src/pages/Home/index.scss`
@@ -104,7 +100,7 @@ app.js root components, index.js traditional and actual entry file.
 ```
 
 > 多次 import 有性能问题？？
-    
+
 ### 2.2 eslint + prettier 代码检查
 
 react 已经集成 eslint，如何覆盖默认配置？现在还没应用场景（强制加逗号？）。
@@ -131,7 +127,7 @@ npm i -D prettier eslint-plugin-prettier
 }
 ```
 
-- 如果 prettier 默认配置不够用，自己[配置](https://prettier.io/docs/en/options.html)   
+- 如果 prettier 默认配置不够用，自己[配置](https://prettier.io/docs/en/options.html)
 
 `.prettierrc`
 
@@ -192,8 +188,8 @@ npm i redux react-redux
       /inital-state # 一级目录统一管理 inital state 太多也不好
   /services # 不是所有东西都可以提取为组件，service 给组件（pages）提供服务
     /redux # 整体 redux
-      /root-reducer.js # 引入所有 reducer  
-      /config-store.js # 生成 store，中间件引入等  
+      /root-reducer.js # 引入所有 reducer
+      /config-store.js # 生成 store，中间件引入等
 ```
 
 #### 3.2.1 处理 redux 业务逻辑
@@ -362,7 +358,7 @@ ReactDOM.render(
 );
 ```
 
-2）通过 `connect` 使所有自组件可以访问在 `Provider` 中注入的 `store`：   
+2）通过 `connect` 使所有自组件可以访问在 `Provider` 中注入的 `store`：
 
 其中 `action` 从当前页面的 `./redux/action.js` 中导入
 
@@ -414,7 +410,6 @@ export default Home;
 ### 3.3 中间件
 
 感觉没有必要引入 redux-logger 中间件，因为 redux-dev 已经很好用了。但异步用的 redux-chunk/redux-saga 还是有用的，暂时没有应用场景（redux-saga 提取异步逻辑，使组件更清晰易维护？）。
-
 
 ## 四 引入 react-router
 
@@ -530,12 +525,62 @@ const List = withRouter(
 
 ```js
 // go to some page
-this.props.history.push('/path')
+this.props.history.push('/path');
 
 // go back
-this.props.history.goBack()
+this.props.history.goBack();
 ```
 
 #### 4.4.3 嵌套路由
 
-这里先不写，如果业务需要可以自己集成。
+因为 `Route` 本身是组件，所以可以在父组件中直接写嵌套自路由，同时这里使用了 `<NavLink>`。
+
+嵌套路由能更好的实现和 react-router 同一个 path 可以匹配多个 component 有关，比如 `/home` 匹配容器组件 `Home` 在其中放置公共组件，而默认显示的导航页面也可以设置为 `/home`，比如 `Eat` 这样就可以显示公共组件的同时显示具体业务组件。
+
+或者利用 react-router 部分匹配，在`/home/eat` 的时候匹配 `Home`，也可以显示多个组件，这时候在 `/home` 就不能写 `exact`，不然匹配不到
+
+- `./Home/components/Nav/index.jsx`
+
+这里在 home 中包含了 eat/shop 子导航，实际，此处的 home 作为一个容器，其他模块作为组件的形式加载（影响加载时间吗？因为不是直接加载，要 home 容器加载完，才能加载组件，另外，路由组件做了一次 redirect，是否影响懒加载？）
+
+```js
+import React, { Suspense, lazy } from 'react';
+import { Route, NavLink } from 'react-router-dom';
+import { Loading } from '../../../../components/Loading/index';
+
+// 懒加载
+const Eat = lazy(() => import('../Eat/index'));
+const Shop = lazy(() => import('../Shop/index'));
+
+export default class Nav extends React.Component {
+  render() {
+    return (
+      <div>
+        {/* child route */}
+        <NavLink to="/home/eat" activeClassName="selected-nav">
+          Eat
+        </NavLink>
+        <NavLink to="/home/shop" activeClassName="selected-nav">
+          Shop
+        </NavLink>
+        <Suspense fallback={Loading}>
+          <Route path="/home/eat" render={() => <Eat />} />
+          <Route path="/home/shop" render={() => <Shop />} />
+        </Suspense>
+        {/* <Route path="/home/eat" component={Eat} />
+        <Route path="/home/shop" component={Shop} /> */}
+      </div>
+    );
+  }
+}
+
+```
+
+- `/Home/index.jsx` 中引入 `Nav`
+
+```js
+<div id="cityGuideHome">
+  <Nav />
+  <p>this is home</p>
+</div>
+```

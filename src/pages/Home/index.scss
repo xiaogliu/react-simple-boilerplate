@@ -3,6 +3,9 @@
   button {
     border: 2px solid red;
   }
+  .selected-nav {
+    color: red;
+  }
 }
 
 @import './components/Eat/index.scss';
