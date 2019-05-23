@@ -409,7 +409,71 @@ export default Home;
 
 ### 3.3 中间件
 
-感觉没有必要引入 redux-logger 中间件，因为 redux-dev 已经很好用了。但异步用的 redux-chunk/redux-saga 还是有用的，暂时没有应用场景（redux-saga 提取异步逻辑，使组件更清晰易维护？）。
+#### 3.3.1 为什么
+
+~~感觉没有必要引入 redux-logger 中间件，因为 redux-dev 已经很好用了。但异步用的 redux-chunk/redux-saga 还是有用的，暂时没有应用场景（redux-saga 提取异步逻辑，使组件更清晰易维护？）。~~
+
+需要引入中间件，redux 作为 react 的数据处理的库，除了处理共享的数据，还处理页面中的接口请求数据（主要为了便于缓存和分离业务逻辑以及方便测试）。参考这里 [Redux — why is state all in one place, even state that isn't global?](https://stackoverflow.com/questions/35664594/redux-why-is-state-all-in-one-place-even-state-that-isnt-global)，[Redux FAQ: Organizing State](https://redux.js.org/faq/organizing-state) and [redux store 取代 react state 合理吗？](https://www.zhihu.com/question/271693121)
+
+什么时候用 redux，什么时候用 state，写几个常见场景：
+
+1. 共享肯定 redux
+2. 如果需要 cache（组件 unmounted 之后的状态依然需要，比如 tab 切换的位置，api 请求数据）使用 redux
+3. 如果仅仅是 select 下拉状态这种，使用 state（仅仅和内部有关，且无需缓存）
+4. form 表单比较特殊，看组件 unmounted 之后返回是否还要保存填入的状态
+
+#### 3.3.2 store 数据结构
+
+这么多数据存储在 store 中，数据结构很重要，要便于查找，**扁平化** 的结构很重要。
+
+#### 3.3.2 redux-dev
+
+在 redux-dex 中和 middleware 集成。参考：[1.2 Advanced store setup](https://github.com/zalmoxisus/redux-devtools-extension#12-advanced-store-setup)
+
+```js
+// integrate redux-dev and middleware
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const enhancer = composeEnhancers(
+  applyMiddleware()
+  // other store enhancers if any
+);
+
+export default createStore(rootReducer, enhancer);
+```
+
+#### 3.3.3 引入 redux-saga
+
+看官方文档：[redux-saga](https://github.com/redux-saga/redux-saga)
+
+这里说明下怎么将 redux-saga 集成到一个文件：
+
+```js
+// foo.js
+export const fooSagas = [
+  takeEvery("FOO_A", fooASaga),
+  takeEvery("FOO_B", fooBSaga),
+]
+
+// bar.js
+export const barSagas = [
+  takeEvery("BAR_A", barASaga),
+  takeEvery("BAR_B", barBSaga),
+];
+
+// index.js
+import { fooSagas } from './foo';
+import { barSagas } from './bar';
+
+export default function* rootSaga() {
+  yield all([
+    ...fooSagas,
+    ...barSagas
+  ])
+}
+```
+
+from [using root saga or multiple sagas](https://github.com/redux-saga/redux-saga/issues/160)
 
 ## 四 引入 react-router
 
@@ -573,7 +637,6 @@ export default class Nav extends React.Component {
     );
   }
 }
-
 ```
 
 - `/Home/index.jsx` 中引入 `Nav`
