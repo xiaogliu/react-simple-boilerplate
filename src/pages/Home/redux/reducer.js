@@ -1,5 +1,5 @@
 // export directly after import, just a pipe
-import { reducer as homeReducer } from '../home-redux';
+import { getIPInfoSucceededReducer as homeReducer } from '../home-redux';
 import { reducer as eatReducer } from '../components/Eat/eat-redux';
 import { initialState } from './initial-state';
 

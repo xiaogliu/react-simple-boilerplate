@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { setHomeAction } from './redux/action';
+import { getIPInfoStart } from './redux/action';
 import Nav from './components/Nav/index';
 
 class PureHome extends React.Component {
@@ -18,7 +18,7 @@ class PureHome extends React.Component {
   };
 
   changeHomeRedux = () => {
-    this.props.setHomeAction(
+    this.props.getIPInfoStart(
       `home redux time ${new Date().getMinutes()}:${new Date().getSeconds()}`
     );
   };
@@ -45,11 +45,12 @@ class PureHome extends React.Component {
 const mapStateToProps = state => {
   return {
     homeReduxData: state.home.homeReduxData,
+    IPInfo: state.home.IPInfo,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    setHomeAction: homeData => dispatch(setHomeAction(homeData)),
+    getIPInfoStart: homeData => dispatch(getIPInfoStart(homeData)),
   };
 };
 const Home = withRouter(
