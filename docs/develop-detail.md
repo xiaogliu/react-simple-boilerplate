@@ -41,7 +41,7 @@
       /reset.css
       /global.css
       /mixin.scss # 如果组件的样式可以整块提取出来，应该考虑写公共的 react 组件，而非仅仅把样式提取出来
-      /color.scss
+      /color.scss # 所有 color，统一维护
     /redux # 整体 redux
       /root-reducer.js # 引入所有 reducer
       /config-store.js # 生成 store，中间件引入等
