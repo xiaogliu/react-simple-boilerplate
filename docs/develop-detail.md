@@ -5,7 +5,7 @@
 ```bash
 /src
   /app.js # app 顶层文件
-  /app.css # 管理所有样式文件
+  /app.css # 管理所有样式，方便安排顺序
   /index.js # 入口文件，设计 app 整理逻辑的都应该放到 app.js 中
   /components # 公共组件，可进一步嵌套，无状态组件，不应该有 redux
     /GptAD.jsx # 文件名即组件引用名，PascalCase 命名
@@ -23,6 +23,7 @@
       /components # 仅仅供 home 使用的组件，包含单独的 redux 等
         /xxx
       /redux
+        /action-type.js # 把常量提出来，因为 saga 里面也用到了
         /action.js # 汇总所有 actions
         /reducer.js # 汇总所有 reducer
         /inital-state # 一级目录统一管理 inital state 太多也不好
@@ -47,7 +48,7 @@
       /config-store.js # 生成 store，中间件引入等
     /mock # mock 数据
     /utils # 工具，常量，不同通过 mock 模拟的本地假数据等
-      /utils.js # 工具函数
+      /tool.js # 工具函数
       /constant.js # 常量，可能根据不同 env 设置不同常量，因为环境确定就不变，也定义为常量（大写）
       /locale-data.js # locale data 不应该很多，比如 cookie，安卓端返回的常量等，api 数据应该通过 mock 获取
     /third-party # 第三方服务
@@ -176,7 +177,7 @@ npm i redux react-redux
         /Eat
           /eat-redux.js
       /redux
-        /action.js # 汇总所有 actions
+        /action.js # 汇总所有 actions，在 index 中统一引用
         /reducer.js # 汇总所有 reducer
         /inital-state # 一级目录统一管理 inital state 太多也不好
       /index.jsx
